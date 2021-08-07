@@ -1,3 +1,5 @@
+#include<ArduinoJson.h>
+
 #define FGate 2//앞문 자석센서 입력
 #define BGate 3//뒷문 자석센서 입력
 #define Trig1 23 //각 좌석별 에코, 트리거 번호들
@@ -25,7 +27,6 @@ void setup() {
 
 int people = 0; //버스승객수
 bool seat[4] = {false,}; //좌석착석여부
-
 bool isSeat(int x) {//착석여부판정함수
   long dura, dist;
   int t, e;
@@ -63,15 +64,18 @@ bool isSeat(int x) {//착석여부판정함수
 }
 
 void loop() {
+  bool isChange = false;
   if (digitalRead(FGate) == LOW) {//승객탑승분기
     people++;
     Serial.print("승객탑승 / 승객수 : ");
     Serial.println(people);
+    isChange = true;
   }
   if (digitalRead(BGate) == LOW) {//승객하차분기
     people--;
     Serial.print("승객하차 / 승객수 : ");
     Serial.println(people);
+    isChange = true;
   }
 
   for(int i = 0; i < 4; i++){ //좌석판정
@@ -82,8 +86,20 @@ void loop() {
         Serial.println("번좌석 자리없음");
       else
         Serial.println("번좌석 자리있음");
+      isChange = true;
     }
   }
-  
-  delay(1200);//1.2초 딜레
+  if(isChange){//json형식으로 python에 전송
+    String jsondata = "";
+    StaticJsonDocument<500> doc;
+    doc["passenger"] = people;
+    doc["seat1"] = seat[0];
+    doc["seat2"] = seat[1];
+    doc["seat3"] = seat[2];
+    doc["seat4"] = seat[3];
+    JsonObject obj = doc.as<JsonObject>();
+    serializeJson(obj, jsondata);
+    Serial.println(jsondata);
+  }
+  delay(1200);//1.2초 딜레이
 }
