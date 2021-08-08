@@ -10,6 +10,7 @@
 #define Echo3 30
 #define Trig4 35
 #define Echo4 34
+#define Buzzer 12//부저(소리)
 
 void setup() {
   Serial.begin(9600);
@@ -69,12 +70,18 @@ void loop() {
     people++;
     Serial.print("#승객탑승 / 승객수 : ");
     Serial.println(people);
+    tone(Buzzer, 2637, 100);//태그인식부저음
+    delay(200);
+    tone(Buzzer, 3136, 100);
     isChange = true;
   }
   if (digitalRead(BGate) == LOW) {//승객하차분기
     people--;
     Serial.print("#승객하차 / 승객수 : ");
     Serial.println(people);
+    tone(Buzzer, 3136, 100);//태그인식부저음
+    delay(200);
+    tone(Buzzer, 2093, 100);
     isChange = true;
   }
 
