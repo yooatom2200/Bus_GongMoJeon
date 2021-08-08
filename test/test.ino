@@ -24,6 +24,16 @@ void setup() {
   pinMode(Echo3, INPUT);
   pinMode(Trig4, OUTPUT);
   pinMode(Echo4, INPUT);
+  String jsondata = "";
+  StaticJsonDocument<500> doc;
+  doc["passenger"] = 0;
+  doc["seat1"] = false;
+  doc["seat2"] = false;
+  doc["seat3"] = false;
+  doc["seat4"] = false;
+  JsonObject obj = doc.as<JsonObject>();
+  serializeJson(obj, jsondata);
+  Serial.println(jsondata);
   tone(Buzzer, 3136, 100);//처음시작알림음
 }
 
