@@ -24,6 +24,7 @@ void setup() {
   pinMode(Echo3, INPUT);
   pinMode(Trig4, OUTPUT);
   pinMode(Echo4, INPUT);
+  tone(Buzzer, 3136, 100);//처음시작알림음
 }
 
 int people = 0; //버스승객수
