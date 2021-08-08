@@ -67,13 +67,13 @@ void loop() {
   bool isChange = false;
   if (digitalRead(FGate) == LOW) {//승객탑승분기
     people++;
-    Serial.print("승객탑승 / 승객수 : ");
+    Serial.print("#승객탑승 / 승객수 : ");
     Serial.println(people);
     isChange = true;
   }
   if (digitalRead(BGate) == LOW) {//승객하차분기
     people--;
-    Serial.print("승객하차 / 승객수 : ");
+    Serial.print("#승객하차 / 승객수 : ");
     Serial.println(people);
     isChange = true;
   }
@@ -83,9 +83,9 @@ void loop() {
       seat[i] = !seat[i];
       Serial.print(i+1);
       if(seat[i] == true)
-        Serial.println("번좌석 자리없음");
+        Serial.println("번좌석 자리없음#");
       else
-        Serial.println("번좌석 자리있음");
+        Serial.println("번좌석 자리있음#");
       isChange = true;
     }
   }
