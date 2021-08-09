@@ -1,3 +1,4 @@
+#아두이노 센서데이터를 FastAPI에 POST
 import serial
 import requests
 ser = serial.Serial('/dev/cu.usbmodem111301', 9600)
